@@ -2,26 +2,28 @@
 
 @section('content')
     <div class="container">
-        <h1>Users</h1>
+         <div class="d-flex justify-content-between">
+            <h4>Users</h4>
+            <!-- Pencarian -->
+            <form action="{{ route('users.index') }}" method="GET" style="width:70%">
+                <div class="row">
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" name="search" placeholder="Search by name, email, or level" value="{{ request('search') }}">
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+                        <a href="{{ route('users.create') }}" class="btn btn-primary"><i class="fas fa-add"></i> New User</a>
 
+                    </div>
+                </div>
+            </form>
+        </div>
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
             </div>
         @endif
-        <form action="{{ route('users.index') }}" method="GET" class="mb-3">
-            <div class="row">
-                <div class="col-md-6">
-                    <input type="text" class="form-control" name="search" placeholder="Search by name, email, or level" value="{{ request('search') }}">
-                </div>
-                <div class="col-md-3">
-                    <button type="submit" class="btn btn-primary">Search</button>
-                    <a href="{{ route('users.create') }}" class="btn btn-primary">New User</a>
-
-                </div>
-            </div>
-        </form>
-
+        <hr/>
         <table class="table">
             <thead>
             <tr>
@@ -41,11 +43,11 @@
                     <td>{{ $user->level }}</td>
 
                     <td>
-                        <a href="{{ route('users.edit', $user) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{{ route('users.edit', $user) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
                         <form action="{{ route('users.destroy', $user) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete</button>
                         </form>
                     </td>
                 </tr>
@@ -56,8 +58,7 @@
             @endforelse
             </tbody>
         </table>
-        <div class="mt-3" style="float: right">
-
+        <div class="mt-3 d-flex justify-content-end">
             {{ $users->appends(request()->query())->links('pagination.bootstrap-5') }}
         </div>
     </div>

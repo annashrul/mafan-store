@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container">
-        <h1>Create User</h1>
-
+        <h4>Create User</h4>
+        <hr/>
         <form method="POST" action="{{ route('users.store') }}">
             @csrf
 
@@ -62,7 +62,9 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary">Create User</button>
-        </form>
+<div class=" d-flex  justify-content-end gap-3">
+                <button type="button" onclick="window.history.back()" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+            </div>        </form>
     </div>
 @endsection

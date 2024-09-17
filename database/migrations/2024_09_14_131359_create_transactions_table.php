@@ -18,6 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->integer('qty');
+            $table->decimal('total', 10, 2);
             $table->timestamps(); // created_at & updated_at
         });
     }

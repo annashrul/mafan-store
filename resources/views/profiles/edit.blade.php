@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Edit Profile</h1>
+        <h4>Edit Profile</h4>
 
         <!-- Display Success Message -->
         @if (session('success'))
@@ -21,6 +21,8 @@
                 </ul>
             </div>
         @endif
+
+        <hr/>
 
         <!-- Form untuk mengedit profil -->
         <form method="POST" action="{{ route('profile.update') }}">
@@ -51,9 +53,13 @@
 
             <!-- Input Password -->
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password">
-                <small class="form-text text-muted">Leave blank if you do not want to change the password.</small>
+                <label for="password" class="form-label">Password <small class="form-text text-muted">Leave blank if you do not want to change the password.</small> </label>
+                <div class="input-group">
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password">
+                    <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
                 @error('password')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -64,7 +70,12 @@
             <!-- Input Confirm Password -->
             <div class="mb-3">
                 <label for="password_confirmation" class="form-label">Confirm Password</label>
-                <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation" name="password_confirmation">
+                <div class="input-group">
+                    <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation" name="password_confirmation">
+                    <button type="button" class="btn btn-outline-secondary" id="togglePasswordConfirmation">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
                 @error('password_confirmation')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -72,7 +83,45 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary">Update Profile</button>
+
+             <div class=" d-flex  justify-content-end gap-3">
+                <button type="button" onclick="window.history.back()" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+            </div>
         </form>
     </div>
+    <script>
+        document.getElementById('togglePasswordConfirmation').addEventListener('click', function (e) {
+        const passwordField = document.getElementById('password_confirmation');
+        const icon = this.querySelector('i');
+        
+        // Toggle password visibility
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    });
+    
+    document.getElementById('togglePassword').addEventListener('click', function (e) {
+        const passwordField = document.getElementById('password');
+        const icon = this.querySelector('i');
+        
+        // Toggle password visibility
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    });
+</script>
+
 @endsection

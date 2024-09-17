@@ -2,7 +2,8 @@
 
 @section('content')
     <div class="container">
-        <h1>Edit Product</h1>
+        <h4>Edit Product</h4>
+        <hr/>
 
         <form action="{{ route('products.update', $product) }}" method="POST">
             @csrf
@@ -38,7 +39,10 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary">Update Product</button>
+            <div class=" d-flex  justify-content-end gap-3">
+                <button type="button" onclick="window.history.back()" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+            </div>
         </form>
     </div>
 @endsection

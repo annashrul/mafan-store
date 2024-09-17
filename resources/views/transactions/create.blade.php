@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Create Transactions</h1>
+        <h4>Create Transactions</h4>
 
         @if(session('success'))
             <div class="alert alert-success">
@@ -19,12 +19,13 @@
                 </ul>
             </div>
         @endif
+        <hr/>
 
         <form action="{{ route('transactions.store') }}" method="POST">
             @csrf
             <div id="transaction-rows">
                 <div class="row mb-3">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="product_id_1" class="form-label">Product</label>
                         <select class="form-select" id="product_id_1" name="transactions[0][product_id]" required>
                             <option value="">Select Product</option>
@@ -39,16 +40,27 @@
                         <input type="number" class="form-control" id="qty_1" name="transactions[0][qty]" min="1" required>
                     </div>
 
-                    <div class="col-md-4">
-                        <button type="button" class="btn btn-danger remove-row" style="margin-top: 33px">Remove</button>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-danger remove-row" style="margin-top: 33px"><i class="fas fa-remove"></i> Remove</button>
                     </div>
                 </div>
+
             </div>
 
-            <h3>Total Amount: <span id="total-amount">0</span></h3>
+            <hr/>
+            <div class="d-flex justify-content-between">
+                <h3 class="text-right right">Total Amount: <span id="total-amount">0</span></h3>
+                <div>
+                    <button type="button" onclick="window.history.back()" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</button>
+                    <button type="button" class="btn btn-primary" id="add-row"><i class="fas fa-add"></i> Add Another Row</button>
+                    <button type="submit" class="btn btn-success" ><i class="fas fa-save"></i> Submit</button>
+                </div>
 
-            <button type="button" class="btn btn-primary" id="add-row">Add Another Row</button>
-            <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+
+
+          
+
         </form>
     </div>
 
@@ -79,7 +91,7 @@
                 const newRow = document.createElement('div');
                 newRow.classList.add('row', 'mb-3');
                 newRow.innerHTML = `
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="product_id_${rowIndex}" class="form-label">Product</label>
                         <select class="form-select" id="product_id_${rowIndex}" name="transactions[${rowIndex}][product_id]" required>
                             <option value="">Select Product</option>
@@ -94,8 +106,8 @@
                         <input type="number" class="form-control" id="qty_${rowIndex}" name="transactions[${rowIndex}][qty]" min="1" required>
                     </div>
 
-                    <div class="col-md-4">
-                        <button type="button" class="btn btn-danger mt-4 remove-row">Remove</button>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-danger remove-row" style="margin-top: 33px"><i class="fas fa-remove"></i> Remove</button>
                     </div>
                 `;
 

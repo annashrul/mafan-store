@@ -6,6 +6,9 @@ use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+
 class TransactionController extends Controller
 {
 
@@ -31,9 +34,9 @@ class TransactionController extends Controller
             $dateTo . ' 23:59:59'
         ]);
         // Debugging output to check the query
-        \Log::info('Query:', [$query->toSql(), $query->getBindings()]);
+        Log::info('Query:', [$query->toSql(), $query->getBindings()]);
         // Pagination
-        $transactions = $query->paginate(10); // 10 transaksi per halaman
+        $transactions = $query->paginate(1); // 10 transaksi per halaman
 
         return view('transactions.index', compact('transactions', 'dateFrom', 'dateTo'));
     }
@@ -54,7 +57,7 @@ class TransactionController extends Controller
         $userId = Auth::id();
 
         // Start a database transaction to ensure all operations are done atomically
-        \DB::beginTransaction();
+        DB::beginTransaction();
 
         try {
             foreach ($request->input('transactions') as $transactionData) {
@@ -64,7 +67,7 @@ class TransactionController extends Controller
                 // Validate stock
                 if ($product->stock < $qty) {
                     // Rollback the transaction and redirect with an error message if insufficient stock
-                    \DB::rollback();
+                    DB::rollback();
                     return redirect()->back()->withErrors(['qty' => 'Insufficient stock available for product: ' . $product->name]);
                 }
 
@@ -83,14 +86,14 @@ class TransactionController extends Controller
             }
 
             // Commit the transaction if all operations are successful
-            \DB::commit();
+            DB::commit();
 
             return redirect()->route('transactions.index')
                 ->with('success', 'Transactions completed successfully.');
 
         } catch (\Exception $e) {
             // Rollback the transaction and redirect with an error message if something goes wrong
-            \DB::rollback();
+            DB::rollback();
             return redirect()->back()->withErrors(['error' => 'Failed to complete transactions. Please try again.']);
         }
     }

@@ -2,26 +2,29 @@
 
 @section('content')
     <div class="container">
-        <h1>Products</h1>
-        <!-- Pencarian -->
-        <form action="{{ route('products.index') }}" method="GET" class="mb-4">
-            <div class="row">
-                <div class="col-md-8">
-                    <input type="text" class="form-control" name="product_name" placeholder="Search by product name" value="{{ request('product_name') }}">
+        <div class="d-flex justify-content-between">
+            <h4>Products</h4>
+            <!-- Pencarian -->
+            <form action="{{ route('products.index') }}" method="GET" style="width:70%">
+                <div class="row">
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" name="product_name" placeholder="Search by product name" value="{{ request('product_name') }}">
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+                        <a href="{{ route('products.create') }}" class="btn btn-primary"><i class="fas fa-add"></i> New Product</a>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <button type="submit" class="btn btn-primary">Search</button>
-                    <a href="{{ route('products.create') }}" class="btn btn-primary">New Product</a>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
+        
 
         @if(session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
             </div>
         @endif
-
+<hr/>
         <table class="table table-hover">
             <thead>
             <tr>
@@ -40,11 +43,11 @@
                     <td>{{ number_format($product->price) }}</td>
                     <td>{{ $product->stock }}</td>
                     <td>
-                        <a href="{{ route('products.edit', $product) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{{ route('products.edit', $product) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i>  Edit</a>
                         <form action="{{ route('products.destroy', $product) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete</button>
                         </form>
                     </td>
                 </tr>
@@ -56,7 +59,7 @@
             </tbody>
         </table>
         <!-- Pagination Controls -->
-        <div class="mt-3" style="float: right">
+        <div class="mt-3 d-flex justify-content-end">
             {{ $products->appends(request()->query())->links('pagination.bootstrap-5') }}
         </div>
     </div>
