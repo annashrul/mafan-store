@@ -17,6 +17,15 @@
                 </div>
                 @enderror
             </div>
+            <div class="mb-3">
+                <label for="purchase_price" class="form-label">Purchase Price</label>
+                <input type="number" step="0.01" class="form-control @error('purchase_price') is-invalid @enderror" id="purchase_price" name="purchase_price" value="{{ old('purchase_price') }}" required>
+                @error('purchase_price')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
 
             <div class="mb-3">
                 <label for="price" class="form-label">Price</label>

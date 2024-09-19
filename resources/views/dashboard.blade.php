@@ -5,6 +5,9 @@
         <h4>Dashboard</h4>
         <hr/>
         <div class="row">
+             <div class="col-md-12" >
+                <canvas id="profitChart" height="70"></canvas>
+            </div>
             <div class="col-md-6" >
                 <canvas id="transactionChart" ></canvas>
             </div>
@@ -26,6 +29,95 @@
     <!-- Include Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+         document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('profitChart').getContext('2d');
+            var profitChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: @json($profits->pluck('date')),
+                    datasets: [{
+                        label: 'Profit per Day (current month)',
+                        data: @json($profits->pluck('profit')),
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                 options: {
+                    scales: {
+                        x: {
+                            ticks: {
+                                font: {
+                                    color:'black',
+                                    family: 'Playpen Sans' // Font pada sumbu x
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Hour',    
+                                font: {
+                                    family: 'Playpen Sans' // Font pada sumbu x
+                                }
+                            }
+                            
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                            // Format the y-axis ticks as currency
+                            return value.toLocaleString();
+                        },
+                                font: {
+                                    color:'black',
+                                    family: 'Playpen Sans' // Font pada sumbu y
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                // This more specific font property overrides the global property
+                                font: {
+                                    color:'black',
+                                    size: 14,
+                                    family: 'Playpen Sans', // Ganti dengan font family
+
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                // Customize the tooltip label
+                                label: function(context) {
+                                    console.log(Number(context.raw).toLocaleString())
+                                    let label = context.dataset.label || '';
+
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    // Add custom text to the tooltip
+                                    label = `total : Rp. ${Number(context.raw).toLocaleString()}`;
+                                    return label;
+                                },
+                                // Customize the tooltip title
+                                title: function(context) {
+                                    // If you want to customize the title, you can do it here
+                                    return `date : ${context[0].label}`;
+                                }
+                            },
+                            bodyFont: {
+                                family: 'Playpen Sans' // Font family untuk tooltip body
+                            },
+                            titleFont: {
+                                family: 'Playpen Sans' // Font family untuk tooltip title
+                            }
+                        }
+                    }
+                }
+            });
+        });
         document.addEventListener('DOMContentLoaded', function () {
                 // Ambil data dari server
                 const transactionsByHour = @json($transactionsByHour);

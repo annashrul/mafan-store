@@ -2,29 +2,6 @@
 
 <style>
 
-td{
-	/* font-weight: 00 !important */
-}
-td,th {
-	white-space: nowrap !important;
-	vertical-align: middle !important;
-}
-.w1{
-	width: 1% !important;
-}
-.text-right{
-	text-align: right !important;
-}
-
-thead{
-	background-color: #EEEEEE !important;
-}
-tfoot{
-	background-color: gray !important;
-	color: #EEEEEE !important
-}
-
-
     
 </style>
 

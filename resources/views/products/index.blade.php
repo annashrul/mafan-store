@@ -30,7 +30,8 @@
             <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Price</th>
+                <th>Purchase Price</th>
+                <th>Selling Price</th>
                 <th>Stock</th>
                 <th>Actions</th>
             </tr>
@@ -38,11 +39,12 @@
             <tbody>
             @forelse($products as $product)
                 <tr>
-                    <td>{{ $loop->iteration + ($products->currentPage() - 1) * $products->perPage() }}</td>
+                    <td class="w1">{{ $loop->iteration + ($products->currentPage() - 1) * $products->perPage() }}</td>
                     <td>{{ $product->name }}</td>
-                    <td>{{ number_format($product->price) }}</td>
-                    <td>{{ $product->stock }}</td>
-                    <td>
+                    <td class="w1 text-right">{{ number_format($product->purchase_price) }}</td>
+                    <td class="w1 text-right">{{ number_format($product->price) }}</td>
+                    <td class="w1 text-right">{{ number_format($product->stock) }}</td>
+                    <td class="w1">
                         <a href="{{ route('products.edit', $product) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i>  Edit</a>
                         <form action="{{ route('products.destroy', $product) }}" method="POST" style="display:inline;">
                             @csrf

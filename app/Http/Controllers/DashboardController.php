@@ -17,6 +17,9 @@ class DashboardController extends Controller
         $today = Carbon::today();
         $currentMonth = $today->month;
         $currentYear = $today->year;
+        $dateFrom = Carbon::now()->startOfMonth()->format('Y-m-d');
+        $dateTo = Carbon::now()->endOfMonth()->format('Y-m-d');
+
         // Ambil data transaksi dari database
         $transactions = Transaction::selectRaw('DAY(created_at) as date, COUNT(*) as count')
             ->whereMonth('created_at', $currentMonth)
@@ -69,8 +72,20 @@ class DashboardController extends Controller
         ->orderBy('hour')
         ->get();
 
+
+         // Ambil data profit transaksi berdasarkan bulan ini
+        $profits = Transaction::selectRaw('DATE(transactions.created_at) as date, SUM((price - purchase_price) * qty) as profit')
+        ->join('products', 'transactions.product_id', '=', 'products.id')
+        ->whereBetween('transactions.created_at', [$dateFrom, $dateTo])
+        ->groupBy('date')
+        ->orderBy('date')
+        ->get();
+
         // Kirim data ke view
         return view('dashboard', [
+            'dateFrom'=>$dateFrom,
+            'dateTo'=>$dateTo, 
+            'profits'=>$profits,
             'transactionsByHour'=>$transactionsByHour,
             'user' => $user, // tambahkan data user ke array data
             'transactionsByUser'=>$transactionsByUser,
