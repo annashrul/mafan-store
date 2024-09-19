@@ -26,7 +26,7 @@ class UserController extends Controller
         Log::info('Query:', [$query->toSql(), $query->getBindings()]);
 
         // Pagination
-        $users = $query->paginate(1); // 10 pengguna per halaman
+        $users = $query->paginate(10); // 10 pengguna per halaman
 
         return view('users.index', compact('users'));
     }

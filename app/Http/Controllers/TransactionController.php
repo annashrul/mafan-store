@@ -36,9 +36,11 @@ class TransactionController extends Controller
         // Debugging output to check the query
         Log::info('Query:', [$query->toSql(), $query->getBindings()]);
         // Pagination
-        $transactions = $query->paginate(1); // 10 transaksi per halaman
-
-        return view('transactions.index', compact('transactions', 'dateFrom', 'dateTo'));
+        $transactions = $query->paginate(10); // 10 transaksi per halaman
+       // Calculate total qty and total amount per page
+        $totalQty = $transactions->sum('qty');
+        $totalAmount = $transactions->sum('total');
+        return view('transactions.index', compact('transactions', 'dateFrom', 'dateTo', 'totalQty', 'totalAmount'));
     }
 
     public function create()

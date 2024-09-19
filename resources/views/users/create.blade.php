@@ -32,8 +32,8 @@
                 <label for="level" class="form-label">Level</label>
                 <select class="form-select @error('level') is-invalid @enderror" id="level" name="level" required>
                     <option value="">Select Level</option>
-                    <option value="admin" {{ old('level') == 'admin' ? 'selected' : '' }}>Admin</option>
-                    <option value="kasir" {{ old('level') == 'kasir' ? 'selected' : '' }}>Kasir</option>
+                    <option value="admin" {{ old('level') == 'admin' ? 'selected' : '' }}>Administrator</option>
+                    <option value="kasir" {{ old('level') == 'kasir' ? 'selected' : '' }}>Cashier</option>
                 </select>
                 @error('level')
                 <div class="invalid-feedback">

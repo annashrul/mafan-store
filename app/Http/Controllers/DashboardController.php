@@ -8,15 +8,23 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
     public function index()
     {
+        $today = Carbon::today();
+        $currentMonth = $today->month;
+        $currentYear = $today->year;
         // Ambil data transaksi dari database
-        $transactions = Transaction::selectRaw('DATE(created_at) as date, COUNT(*) as count')
+        $transactions = Transaction::selectRaw('DAY(created_at) as date, COUNT(*) as count')
+            ->whereMonth('created_at', $currentMonth)
+            ->whereYear('created_at', $currentYear)
             ->groupBy('date')
             ->get();
+
+
 
         // Parsing data untuk chart
         $dates = [];
@@ -54,10 +62,16 @@ class DashboardController extends Controller
         ->groupBy('users.name')
         ->get();
 
-            // dd($user->name);
+        $transactionsByHour = DB::table('transactions')
+        ->select(DB::raw('HOUR(created_at) as hour'), DB::raw('COUNT(*) as total_transactions'))
+        ->whereDate('created_at', $today) // Filter berdasarkan tanggal hari ini
+        ->groupBy('hour')
+        ->orderBy('hour')
+        ->get();
 
         // Kirim data ke view
         return view('dashboard', [
+            'transactionsByHour'=>$transactionsByHour,
             'user' => $user, // tambahkan data user ke array data
             'transactionsByUser'=>$transactionsByUser,
             'topProducts'=>$topProducts,

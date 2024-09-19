@@ -18,6 +18,8 @@
 	<link
 		href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playpen+Sans:wght@100..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
 		rel="stylesheet">
+
+		
 	<style>
 	* {
 		font-family: "Playpen Sans", cursive;
@@ -61,8 +63,8 @@
 	}
 
 	.main-content {
-		margin-left: 250px;
-		padding: 20px;
+		margin-left: 270px;
+		padding: 5px;
 
 	}
 
@@ -131,6 +133,13 @@
 		background-color: rgb(244, 247, 254) !important;
 		border-radius: 5px;
 		color: #4318FF !important
+	}
+	.active>.page-link, .page-link.active{
+				background-color: #4318FF !important
+
+	}
+	a{
+		/* color:#4318FF !important */
 	}
 	</style>
 </head>

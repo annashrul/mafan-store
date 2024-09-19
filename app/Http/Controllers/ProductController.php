@@ -27,7 +27,7 @@ class ProductController extends Controller
         }
 
         // Pagination
-        $products = $query->paginate(1); // 10 produk per halaman
+        $products = $query->paginate(10); // 10 produk per halaman
 
         return view('products.index', compact('products'));
     }
