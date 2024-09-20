@@ -37,6 +37,7 @@ class TransactionController extends Controller
         Log::info('Query:', [$query->toSql(), $query->getBindings()]);
         // Pagination
         $transactions = $query->paginate(10); // 10 transaksi per halaman
+     
        // Calculate total qty and total amount per page
         $totalQty = $transactions->sum('qty');
         $totalAmount = $transactions->sum('total');

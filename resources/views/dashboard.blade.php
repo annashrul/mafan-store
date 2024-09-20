@@ -8,6 +8,9 @@
              <div class="col-md-12" >
                 <canvas id="profitChart" height="70"></canvas>
             </div>
+             <div class="col-md-12">
+                <hr/>
+            </div>
             <div class="col-md-6" >
                 <canvas id="transactionChart" ></canvas>
             </div>
@@ -40,7 +43,7 @@
                         data: @json($profits->pluck('profit')),
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
+                        borderWidth: 2
                     }]
                 },
                  options: {
@@ -142,7 +145,7 @@
                         data: data,
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1,
+                        borderWidth: 2,
                         fill: true,
 
                     }]
@@ -254,7 +257,7 @@
                                     ? 'rgba(255, 99, 132, 1)' // Border warna untuk user yang login
                                     : 'rgba(75, 192, 192, 1)'; // Border warna untuk semua user
                             },
-                            borderWidth: 1
+                            borderWidth: 2
                         }]
                     },
                     options: {
@@ -346,7 +349,7 @@
                         data: data,
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
+                        borderWidth: 2
                     }]
                 },
                 options: {

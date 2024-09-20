@@ -17,7 +17,7 @@
                     value="{{ request('product_name') }}" placeholder="Search by product name">
             </div>
 
-            <div class="col-md-2" style="padding: 0">
+            <div class="col-md-3" style="padding: 0">
                 <input type="text" class="form-control" id="date_from" name="date_from"
                     value="{{ old('date_from', $dateFrom) }}" placeholder="Date from">
             </div>
@@ -25,18 +25,16 @@
                 <i class="fas fa-exchange-alt"></i>
             </div>
 
-            <div class="col-md-2" style="padding: 0">
+            <div class="col-md-3" style="padding: 0">
                 <input type="text" class="form-control" id="date_to" name="date_to"
                     value="{{ old('date_to', $dateTo) }}" placeholder="Date to">
             </div>
             
-            <div class="col-md-4 d-flex align-items-center">
+            <div class="col-md-2 d-flex align-items-center">
                 <button type="submit" class="btn btn-primary me-2">
                     <i class="fas fa-search"></i> Search
                 </button>
-                <a href="{{ route('transactions.create') }}" class="btn btn-primary">
-                    <i class="fas fa-add"></i> Transaction
-                </a>
+                
             </div>
         </div>
     </form>
@@ -62,13 +60,11 @@
 				<th>Qty</th>
 				<th>Total</th>
 				<th>User</th>
-
 				<th>Date</th>
 			</tr>
 		</thead>
 		<tbody>
 			@forelse($transactions as $transaction)
-				
 			<tr>
 				<td class="w1">{{ $loop->iteration + ($transactions->currentPage() - 1) * $transactions->perPage() }}</td>
 				<td>{{ $transaction->product->name }}</td>

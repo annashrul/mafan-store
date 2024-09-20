@@ -38,12 +38,14 @@
     <div class="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
         <div class="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
             <div class="flex flex-col items-center justify-center">
-               <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo">
-          Mafan Store    
+               <a href="#" class="flex items-center text-2xl font-semibold text-gray-900 dark:text-white">
+                			<img src="{{url('/logo.jpg')}}" alt="Image" style="height: 220px;"/>
+
+          {{-- <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo"> --}}
+          {{-- Mafan Store     --}}
       </a>
             </div>
-            <div class="mt-12 flex flex-col items-center">
+            <div class="flex flex-col items-center">
                 <h1 class="text-2xl xl:text-3xl font-extrabold">
                   Sign in to your account
                 </h1>

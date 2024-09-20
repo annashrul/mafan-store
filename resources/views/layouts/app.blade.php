@@ -173,43 +173,42 @@ tfoot{
 
 	<div class="sidebar">
 		<div class="sidebar-header">
-			<h4 class="text-center py-3">Mafan Store</h4>
+			<img src="{{url('/logo.jpg')}}" alt="Image" style="height: 120px;margin-left:30px"/>
+
+			{{-- <h4 class="text-center py-3">Sangkan Jaya</h4> --}}
 		</div>
 		<ul class="nav flex-column">
-			@if(Auth::check() && Auth::user()->level === 'admin')
-
 			<li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
 				<a class="nav-link " href="{{ route('dashboard') }}">
 					<i class="fas fa-tachometer-alt"></i> Dashboard
 				</a>
 			</li>
+			@if(Auth::check() && Auth::user()->level === 'admin')
+
+			
 			<li class="nav-item {{ Request::is('users') ? 'active' : '' }}">
 				<a class="nav-link" href="{{ route('users.index') }}">
 					<i class="fas fa-users"></i> Users
 				</a>
 			</li>
-			<li class="nav-item {{ Request::is('transactions') ? 'active' : '' }}">
-				<a class="nav-link" href="{{ route('transactions.index') }}">
-					<i class="fas fa-exchange-alt"></i> Transactions
-				</a>
+			
 			</li>
 			<li class="nav-item {{ Request::is('products') ? 'active' : '' }}">
 				<a class="nav-link" href="{{ route('products.index') }}">
 					<i class="fas fa-box"></i> Products
 				</a>
 			</li>
-			@elseif(Auth::check() && Auth::user()->level === 'kasir')
-			<li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
-				<a class="nav-link active" href="{{ route('dashboard') }}">
-					<i class="fas fa-tachometer-alt"></i> Dashboard
+			@endif
+			<li class="nav-item  {{ Request::is('transactions/create') ? 'active' : '' }}">
+				<a class="nav-link" href="{{ route('transactions.create') }}">
+					<i class="fas fa-exchange-alt"></i> Transactions
 				</a>
 			</li>
 			<li class="nav-item  {{ Request::is('transactions') ? 'active' : '' }}">
 				<a class="nav-link" href="{{ route('transactions.index') }}">
-					<i class="fas fa-exchange-alt"></i> Transactions
+					<i class="fas fa-exchange-alt"></i> Report Transactions
 				</a>
 			</li>
-			@endif
 
 		</ul>
 		<div class="sidebar-footer">
