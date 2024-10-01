@@ -24,7 +24,13 @@
                 <canvas id="topProductsChart" ></canvas>
             </div>
             <div class="col-md-6">
-                <canvas id="userTransactionsChart"></canvas>
+                <canvas id="lowStockChart" ></canvas>
+            </div>
+            <div class="col-md-12">
+                <hr/>
+            </div>
+            <div class="col-md-12">
+                <canvas id="userTransactionsChart" height="70"></canvas>
             </div>
         </div>
     </div>
@@ -32,6 +38,39 @@
     <!-- Include Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('lowStockChart').getContext('2d');
+            const lowStockChart = new Chart(ctx, {
+                type: 'bar', // Menggunakan grafik bar
+                data: {
+                    labels: @json($productNames), // Nama produk
+                    datasets: [{
+                        label: 'Stock',
+                        data: @json($productStocks), // Jumlah stok
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return tooltipItem.dataset.label + ': ' + tooltipItem.raw + ' items left';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
          document.addEventListener('DOMContentLoaded', function () {
             var ctx = document.getElementById('profitChart').getContext('2d');
             var profitChart = new Chart(ctx, {
@@ -57,12 +96,12 @@
                             },
                             title: {
                                 display: true,
-                                text: 'Hour',    
+                                text: 'Hour',
                                 font: {
                                     family: 'Playpen Sans' // Font pada sumbu x
                                 }
                             }
-                            
+
                         },
                         y: {
                             beginAtZero: true,
@@ -161,12 +200,12 @@
                             },
                             title: {
                                 display: true,
-                                text: 'Hour',    
+                                text: 'Hour',
                                 font: {
                                     family: 'Playpen Sans' // Font pada sumbu x
                                 }
                             }
-                            
+
                         },
                         y: {
                             beginAtZero: true,
@@ -242,7 +281,7 @@
                     type: 'bar',
                     data: {
                         labels: allLabels,
-                        datasets: [{ 
+                        datasets: [{
                             label: 'Total Transactions by User',
                             data: allData,
                             backgroundColor: (context) => {
@@ -271,7 +310,7 @@
                             },
                             title: {
                                 display: true,
-                                text: 'User',    
+                                text: 'User',
                                 font: {
                                     family: 'Playpen Sans' // Font pada sumbu x
                                 }
@@ -362,7 +401,7 @@
                             },
                             title: {
                                 display: true,
-                                text: 'Product',    
+                                text: 'Product',
                                 font: {
                                     family: 'Playpen Sans' // Font pada sumbu x
                                 }
@@ -436,7 +475,7 @@
                         },
                         options: {
                             plugins: {
-                                
+
                                 legend: {
                                     labels: {
                                         // This more specific font property overrides the global property
@@ -484,7 +523,7 @@
                                     },
                                     title: {
                                         display: true,
-                                        text: 'Date',    
+                                        text: 'Date',
                                         font: {
                                             family: 'Playpen Sans' // Font pada sumbu x
                                         }
@@ -506,6 +545,6 @@
                         }
                     });
         })
-       
+
     </script>
 @endsection

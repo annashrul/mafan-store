@@ -2,7 +2,7 @@
 
 <style>
 
-    
+
 </style>
 
 @section('content')
@@ -29,12 +29,12 @@
                 <input type="text" class="form-control" id="date_to" name="date_to"
                     value="{{ old('date_to', $dateTo) }}" placeholder="Date to">
             </div>
-            
+
             <div class="col-md-2 d-flex align-items-center">
                 <button type="submit" class="btn btn-primary me-2">
                     <i class="fas fa-search"></i> Search
                 </button>
-                
+
             </div>
         </div>
     </form>
@@ -55,44 +55,57 @@
 	<table class="table table-responsive table-hover">
 		<thead>
 			<tr>
-				<th>#</th> <!-- Column for numbering -->
-				<th>Product</th>
-				<th>Qty</th>
-				<th>Total</th>
-				<th>User</th>
-				<th>Date</th>
+                <th>Transaction No</th>
+                <th>Cashier</th>
+                <th>Date</th>
 			</tr>
 		</thead>
 		<tbody>
-			@forelse($transactions as $transaction)
+			@forelse($masterTransactions  as $transaction)
 			<tr>
-				<td class="w1">{{ $loop->iteration + ($transactions->currentPage() - 1) * $transactions->perPage() }}</td>
-				<td>{{ $transaction->product->name }}</td>
-				<td class="w1 text-right">{{ $transaction->qty }}</td>
-				<td class="w1 text-right">{{ number_format($transaction->total) }}</td>
-				<td class="w1">{{ $transaction->user->name }}</td>
-				
-				<td class="w1">{{ $transaction->created_at->format('Y-m-d H:i') }}</td>
+                <td> {{ $loop->iteration + ($masterTransactions->currentPage() - 1) * $masterTransactions->perPage() }}. {{ $transaction->transaction_no }}</td>
+                <td>{{ $transaction->transactions[0]->user->name }}</td>
+
+                <td >{{ $transaction->created_at }}</td>
+
+
+
 			</tr>
+
+
+                @foreach($transaction->transactions as $detail)
+                    <tr>
+                        <td colspan="1">
+                            - {{ $detail->product->name }}
+                        </td>
+                        <td colspan="2">
+                            <span style="text-align: right">x{{ $detail->qty }}</span> ({{ number_format($detail->total) }})
+
+                        </td>
+
+
+                    </tr>
+
+                @endforeach
 			@empty
 			<tr>
 				<td colspan="6" class="text-center">No transactions found.</td>
 			</tr>
 			@endforelse
 		</tbody>
-		<tfoot>
-			<tr>
-				<th colspan="2">TOTAL PERPAGE</th>
-				<th class="text-right" colspan="1">{{ number_format($totalQty) }}</th>
-				<th class="text-right" colspan="1">{{ number_format($totalAmount) }}</th>
-				<th colspan="2"></th>
-			</tr>
-		</tfoot>
+{{--		<tfoot>--}}
+{{--			<tr>--}}
+{{--				<th colspan="3">TOTAL PERPAGE</th>--}}
+{{--				<th class="text-right" colspan="1">{{ number_format($totalQty) }}</th>--}}
+{{--				<th class="text-right" colspan="1">{{ number_format($totalAmount) }}</th>--}}
+{{--				<th colspan="2"></th>--}}
+{{--			</tr>--}}
+{{--		</tfoot>--}}
 	</table>
 	<!-- Pagination Controls -->
 	<div class="mt-3 d-flex justify-content-end">
 
-		{{ $transactions->appends(request()->query())->links('pagination.bootstrap-5') }}
+		{{ $masterTransactions->appends(request()->query())->links('pagination.bootstrap-5') }}
 	</div>
 </div>
 

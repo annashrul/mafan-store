@@ -39,7 +39,7 @@
             <tbody>
             @forelse($products as $product)
                 <tr>
-                    <td class="w1">{{ $loop->iteration + ($products->currentPage() - 1) * $products->perPage() }}</td>
+                    <td class="w1">c</td>
                     <td>{{ $product->name }}</td>
                     <td class="w1 text-right">{{ number_format($product->purchase_price) }}</td>
                     <td class="w1 text-right">{{ number_format($product->price) }}</td>

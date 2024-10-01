@@ -81,10 +81,19 @@ class DashboardController extends Controller
         ->orderBy('date')
         ->get();
 
+
+        // Ambil produk dengan stok kurang dari 3
+        $lowStockProducts = Product::where('stock', '<', 3)->get();
+
+        // Data untuk grafik
+        $productNames = $lowStockProducts->pluck('name');
+        $productStocks = $lowStockProducts->pluck('stock');
         // Kirim data ke view
         return view('dashboard', [
+            'productNames'=>$productNames,
+            'productStocks'=>$productStocks,
             'dateFrom'=>$dateFrom,
-            'dateTo'=>$dateTo, 
+            'dateTo'=>$dateTo,
             'profits'=>$profits,
             'transactionsByHour'=>$transactionsByHour,
             'user' => $user, // tambahkan data user ke array data
