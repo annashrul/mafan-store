@@ -44,7 +44,7 @@
 
                     <td>
                         <a href="{{ route('users.edit', $user) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
-                        <form action="{{ route('users.destroy', $user) }}" method="POST" style="display:inline;">
+                        <form onsubmit="return confirmDelete();" action="{{ route('users.destroy', $user) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete</button>
@@ -63,3 +63,8 @@
         </div>
     </div>
 @endsection
+<script>
+    function confirmDelete() {
+        return confirm('Are you sure you want to delete this user?');
+    }
+</script>

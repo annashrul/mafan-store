@@ -17,14 +17,14 @@
                 </div>
             </form>
         </div>
-        
+
 
         @if(session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
             </div>
         @endif
-<hr/>
+        <hr/>
         <table class="table table-hover">
             <thead>
             <tr>
@@ -46,7 +46,7 @@
                     <td class="w1 text-right">{{ number_format($product->stock) }}</td>
                     <td class="w1">
                         <a href="{{ route('products.edit', $product) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i>  Edit</a>
-                        <form action="{{ route('products.destroy', $product) }}" method="POST" style="display:inline;">
+                        <form  onsubmit="return confirmDelete();" action="{{ route('products.destroy', $product) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Delete</button>
@@ -66,3 +66,8 @@
         </div>
     </div>
 @endsection
+<script>
+    function confirmDelete() {
+        return confirm('Are you sure you want to delete this product?');
+    }
+</script>
