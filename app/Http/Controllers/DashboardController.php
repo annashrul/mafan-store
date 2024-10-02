@@ -58,7 +58,6 @@ class DashboardController extends Controller
             $user = User::find(Auth::id());
 
 
-
             $transactionsByUser = Transaction::select('users.name', DB::raw('count(*) as total_transactions'))
         ->join('users', 'transactions.user_id', '=', 'users.id')
         // ->where('transactions.user_id', $userId)

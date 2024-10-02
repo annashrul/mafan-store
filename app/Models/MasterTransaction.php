@@ -16,9 +16,7 @@ class MasterTransaction extends Model
         'transaction_no',
         'total',
     ];
-    public function transactions()
-    {
-        return $this->hasMany(Transaction::class);
+  public function transactions() {
+    return $this->hasMany(Transaction::class, 'master_transaction_id', 'transaction_no');
     }
-
 }

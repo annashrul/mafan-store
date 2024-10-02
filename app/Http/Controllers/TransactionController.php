@@ -33,44 +33,33 @@ class TransactionController extends Controller
             $dateFrom . ' 00:00:00',
             $dateTo . ' 23:59:59'
         ]);
-
-        // Join tabel transactions dengan master_transactions
-        $masterTransactions = $query->with(['transactions' => function($q) {
-            $q->select('id', 'product_id', 'user_id', 'qty', 'total', 'created_at', 'updated_at', 'master_transaction_id')
-                ->with('product:id,name'); // Mengambil informasi produk
-        }])->paginate(10); // Menambahkan pagination
-
-        // Struktur ulang data agar sesuai dengan format yang diinginkan
-        $formattedData = $masterTransactions->map(function($masterTransaction) {
-            return [
-                'id' => $masterTransaction->id,
-                'transaction_no' => $masterTransaction->transaction_no,
-                'transaction_detail' => $masterTransaction->transactions->map(function($transaction) {
-                    return [
-                        'id' => $transaction->id,
-                        'transaction_id' => $transaction->id,
-                        'product_id' => $transaction->product_id,
-                        'qty' => $transaction->qty,
-                        'total' => $transaction->total,
-                        'created_at' => $transaction->created_at,
-                        'updated_at' => $transaction->updated_at,
-                    ];
-                }),
-                'total' => $masterTransaction->total,
-                'created_at' => $masterTransaction->created_at,
-                'updated_at' => $masterTransaction->updated_at
-            ];
-        });
-
-
+      $transactions = MasterTransaction::with(['transactions.product', 'transactions.user'])
+    ->get()
+    ->map(function ($masterTransaction) {
+        return [
+            'transaction_no' => $masterTransaction->transaction_no,
+            'total' => $masterTransaction->total,
+            'created_at' => $masterTransaction->created_at,
+            'detail' => $masterTransaction->transactions->map(function ($transaction) {
+                return [
+                    'product_name' => $transaction->product->name,
+                    'product_price' => $transaction->product->price,
+                    'qty' => $transaction->qty,
+                    'user_name' => $transaction->user->name,
+                    'total' => $transaction->total
+                ];
+            })
+        ];
+    });
+       
+       
 
         return view('transactions.index', [
-            'transactions' => $formattedData,
+            'transactions' => $transactions,
             'dateFrom' => $dateFrom,
             'dateTo' => $dateTo,
             'totalQty'=>0,
             'totalAmount'=>0,
-            'masterTransactions' => $masterTransactions, // Tambahkan ini untuk paginasi
         ]);
     }
 
